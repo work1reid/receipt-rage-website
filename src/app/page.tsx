@@ -39,18 +39,9 @@ function ScoreScreen() {
       <p className="text-red-500 text-xs font-bold mt-2">Price Gouged</p>
       <p className="text-zinc-500 text-[10px] mt-1">You overpaid $9.42</p>
       <div className="mt-4 space-y-1.5 text-left">
-        <div className="flex justify-between text-[9px]">
-          <span className="text-zinc-400">Chicken Breast 500g</span>
-          <span className="text-red-400 font-semibold">save $2.50</span>
-        </div>
-        <div className="flex justify-between text-[9px]">
-          <span className="text-zinc-400">Bananas 1kg</span>
-          <span className="text-red-400 font-semibold">save $2.40</span>
-        </div>
-        <div className="flex justify-between text-[9px]">
-          <span className="text-zinc-400">Milk 2L</span>
-          <span className="text-red-400 font-semibold">save $0.61</span>
-        </div>
+        <div className="flex justify-between text-[9px]"><span className="text-zinc-400">Chicken Breast 500g</span><span className="text-red-400 font-semibold">save $2.50</span></div>
+        <div className="flex justify-between text-[9px]"><span className="text-zinc-400">Bananas 1kg</span><span className="text-red-400 font-semibold">save $2.40</span></div>
+        <div className="flex justify-between text-[9px]"><span className="text-zinc-400">Milk 2L</span><span className="text-red-400 font-semibold">save $0.61</span></div>
       </div>
       <div className="mt-4 bg-[#1a1a1a] border border-[#22c55e]/30 rounded-lg p-2.5">
         <p className="text-white text-[10px] font-medium">{"Next time, shop at"} <span className="text-[#22c55e] font-bold">Aldi</span></p>
@@ -60,16 +51,28 @@ function ScoreScreen() {
   );
 }
 
-// ── Scan screen (inside phone) ───────────────────────────
-function ScanScreenMock() {
+// ── Home/scan screen (inside phone) ──────────────────────
+function HomeScreenMock() {
   return (
     <div className="text-center w-full">
-      <p className="text-red-500 text-[10px] font-black tracking-[0.2em] mb-6">RECEIPT RAGE</p>
+      <p className="text-red-500 text-[10px] font-black tracking-[0.2em] mb-5">RECEIPT RAGE</p>
       <p className="text-white text-base font-bold mb-1">Scan your receipt</p>
-      <p className="text-zinc-500 text-[10px] mb-8">Find out if you got ripped off</p>
-      <div className="space-y-2">
-        <div className="bg-red-500 rounded-lg py-3"><p className="text-white text-xs font-bold">Take Photo</p></div>
-        <div className="border border-red-500 rounded-lg py-3"><p className="text-red-500 text-xs font-bold">Upload</p></div>
+      <p className="text-zinc-500 text-[10px] mb-5">Find out if you got ripped off</p>
+      <div className="space-y-2 mb-5">
+        <div className="bg-red-500 rounded-lg py-2.5"><p className="text-white text-xs font-bold">Take Photo</p></div>
+        <div className="border border-red-500 rounded-lg py-2.5"><p className="text-red-500 text-xs font-bold">Upload</p></div>
+      </div>
+      <div className="bg-[#1a1a1a] rounded-lg p-3 flex justify-between items-center">
+        <div><p className="text-white text-sm font-semibold">3</p><p className="text-zinc-500 text-[8px]">receipts scanned</p></div>
+        <div className="w-px h-8 bg-zinc-700" />
+        <div><p className="text-[#22c55e] text-sm font-semibold">$14.20</p><p className="text-zinc-500 text-[8px]">could save</p></div>
+      </div>
+      <div className="mt-3 text-left">
+        <p className="text-zinc-600 text-[8px] tracking-widest font-semibold mb-2">TODAY</p>
+        <div className="flex justify-between items-center py-2 border-b border-zinc-800">
+          <div><p className="text-white text-[10px] font-semibold">Woolworths</p><p className="text-zinc-500 text-[8px]">8 items · $34.70</p></div>
+          <div className="w-8 h-8 rounded-full border-2 border-red-500 flex items-center justify-center"><span className="text-red-500 text-[10px] font-black">83</span></div>
+        </div>
       </div>
     </div>
   );
@@ -96,7 +99,7 @@ function ShareCardMock() {
   );
 }
 
-// ── Social proof share card (not in a phone) ─────────────
+// ── Social proof share card (standalone) ─────────────────
 function SocialShareCard() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
@@ -154,7 +157,7 @@ export default function Home() {
       </nav>
 
       {/* ── HERO ─────────────────────────────────────── */}
-      <section className="pt-24 pb-12 md:pt-32 md:pb-20 px-5">
+      <section className="pt-24 pb-8 md:pt-32 md:pb-12 px-5">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-10 lg:gap-6 items-center">
           <div>
             <motion.h1 variants={fade} initial="hidden" animate="visible" custom={0}
@@ -178,27 +181,28 @@ export default function Home() {
             </motion.div>
           </div>
 
+          {/* Hero phone shows the HOME screen, not the score */}
           <motion.div variants={fade} initial="hidden" animate="visible" custom={0.25}
             className="flex justify-center lg:justify-end"
           >
             <Phone>
-              <ScoreScreen />
+              <HomeScreenMock />
             </Phone>
           </motion.div>
         </div>
       </section>
 
       {/* ── SOCIAL PROOF ─────────────────────────────── */}
-      <section className="py-16 px-5">
+      <section className="py-10 px-5">
         <div className="max-w-3xl mx-auto">
           <motion.p variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }}
-            className="text-center text-zinc-500 text-sm font-semibold tracking-wide uppercase mb-8"
+            className="text-center text-zinc-500 text-sm font-semibold tracking-wide uppercase mb-6"
           >
             This is what people are sharing.
           </motion.p>
           <SocialShareCard />
           <motion.p variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0.2}
-            className="text-center text-zinc-600 text-sm mt-6"
+            className="text-center text-zinc-600 text-sm mt-5"
           >
             Same receipt. Same items. Wildly different prices.
           </motion.p>
@@ -206,8 +210,8 @@ export default function Home() {
       </section>
 
       {/* ── RAGE STATS ───────────────────────────────── */}
-      <section className="py-16 px-5">
-        <div className="max-w-4xl mx-auto space-y-10">
+      <section className="py-10 px-5">
+        <div className="max-w-4xl mx-auto space-y-8">
           <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }}>
             <p className="text-red-500 text-5xl md:text-7xl font-black">$1,600</p>
             <p className="text-zinc-400 text-lg mt-2">What the average Aussie family overpays on groceries. Every year.</p>
@@ -222,7 +226,7 @@ export default function Home() {
           </motion.div>
 
           <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0.1}
-            className="bg-zinc-900 border border-zinc-800 rounded-xl p-6"
+            className="bg-zinc-900 border border-zinc-800 rounded-xl p-5"
           >
             <p className="text-zinc-300 text-base leading-relaxed">
               The ACCC is investigating supermarket pricing right now.{" "}
@@ -234,47 +238,48 @@ export default function Home() {
       </section>
 
       {/* ── HOW IT WORKS ─────────────────────────────── */}
-      <section className="py-20 px-5 bg-zinc-950">
+      <section className="py-12 px-5 bg-zinc-950">
         <div className="max-w-5xl mx-auto">
           <motion.h2 variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-black tracking-tight text-center mb-14"
+            className="text-3xl md:text-4xl font-black tracking-tight text-center mb-10"
           >
             Takes 10 seconds.
           </motion.h2>
 
-          <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-4">
+          {/* Tighter phones, overlapping on desktop */}
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:-space-x-8">
             <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0}
-              className="text-center md:-rotate-2"
+              className="text-center md:-rotate-3 md:z-0"
             >
-              <Phone className="scale-[0.78] md:scale-[0.82]">
-                <ScanScreenMock />
+              <Phone className="scale-[0.7] md:scale-75">
+                <HomeScreenMock />
               </Phone>
-              <p className="text-zinc-400 text-sm font-bold mt-3">Snap it</p>
+              <p className="text-zinc-400 text-sm font-bold -mt-2">Snap it</p>
             </motion.div>
 
-            <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0.12}
-              className="text-center md:z-10 md:scale-105"
+            <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0.1}
+              className="text-center md:z-10"
             >
-              <Phone className="scale-[0.78] md:scale-[0.9]">
+              <Phone className="scale-[0.7] md:scale-[0.85]">
                 <ScoreScreen />
               </Phone>
-              <p className="text-zinc-400 text-sm font-bold mt-3">Score it</p>
+              <p className="text-zinc-400 text-sm font-bold -mt-2">Score it</p>
             </motion.div>
 
-            <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0.24}
-              className="text-center md:rotate-2"
+            <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0.2}
+              className="text-center md:rotate-3 md:z-0"
             >
-              <Phone className="scale-[0.78] md:scale-[0.82]">
+              <Phone className="scale-[0.7] md:scale-75">
                 <ShareCardMock />
               </Phone>
-              <p className="text-zinc-400 text-sm font-bold mt-3">Share it</p>
+              <p className="text-zinc-400 text-sm font-bold -mt-2">Share it</p>
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* ── BOTTOM CTA ───────────────────────────────── */}
-      <section className="py-24 px-5">
+      <section className="py-16 px-5">
         <div className="max-w-2xl mx-auto text-center">
           <motion.h2 variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }}
             className="text-3xl md:text-5xl font-black tracking-tight mb-4"
@@ -283,18 +288,18 @@ export default function Home() {
             <span className="text-red-500">Start scanning.</span>
           </motion.h2>
           <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0.1}
-            className="space-y-3 mt-8"
+            className="space-y-3 mt-6"
           >
             <DownloadButton />
             <p className="text-zinc-600 text-sm">Free. Takes 10 seconds.</p>
-            <p className="text-zinc-700 text-xs mt-4">Android coming soon.</p>
+            <p className="text-zinc-700 text-xs mt-2">Android coming soon.</p>
           </motion.div>
         </div>
       </section>
 
       {/* ── FOOTER ───────────────────────────────────── */}
-      <footer className="border-t border-zinc-800/50 py-8 px-5">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-5">
+      <footer className="border-t border-zinc-800/50 py-6 px-5">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-zinc-500 text-sm">
             <Flame className="w-4 h-4 text-red-500" />
             <span className="font-bold text-zinc-400">Receipt Rage</span>
